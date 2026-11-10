@@ -23,3 +23,5 @@ func add(x, y int) int {
     return x + y
 }
 ```
+
+- 同じ型が続くときは省略記法を使う。
