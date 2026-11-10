@@ -1,5 +1,12 @@
 # Contributing
 
+## フォルダ構成
+
+- 章: `01-basics-functions` のように **番号 + ハイフン + トピック名**
+- 章の中: `package` / `pointers` など **トピック名のみ**（番号なし）
+- **各トピックフォルダに `main.go` を置く**（`package main`）。新規トピックを作るときはフォルダと同時に追加する
+- メモ: トピック名に合わせた `.md`（例: `zeros/zero.md`）は任意
+
 ## コミットメッセージ（Conventional Commits）
 
 ```

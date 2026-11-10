@@ -83,7 +83,9 @@ func main() {
 	i++
 	fmt.Println("i =", i)
 
-	// deferのスタック
+	// deferが複数ある時スタックされる
+	// 依存関係を正しく扱うため。
+	// 最初に開いたものを最後にクローズするため。
 }
 
 func pow(x, n, lim float64) float64 {
