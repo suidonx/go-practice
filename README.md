@@ -9,6 +9,10 @@ Go の練習用リポジトリ。
 3. `03-flow-control` — for、if など
 4. `04-pointers-slices` — ポインタ、スライス
 
+## 初級課題
+
+`beginner-exercises/` — 章とは別にまとめた演習（一覧は `beginner-exercises/index.md`）
+
 ## 使い方
 
 各トピックフォルダで `main.go` を実行する。
