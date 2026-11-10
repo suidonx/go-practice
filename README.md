@@ -6,5 +6,14 @@ Go の練習用リポジトリ。
 
 1. `01-basics-functions` — パッケージ、import、関数など
 2. `02-variables` — 変数、型、ゼロ値、型変換
+3. `03-flow-control` — for、if など
+4. `04-pointers-slices` — ポインタ、スライス
 
-章フォルダは `01-...` のように **番号 + ハイフン + トピック名**。中のサブフォルダはトピック名のみ（番号なし）。
+## 使い方
+
+各トピックフォルダで `main.go` を実行する。
+
+```bash
+cd 02-variables/zeros
+go run main.go
+```
