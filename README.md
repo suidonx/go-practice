@@ -11,6 +11,7 @@ Go の練習用リポジトリ。
 5. `05-methods-interface` — メソッド、インターフェース
 6. `06-goroutine` — goroutine
 7. `09-http-api` — HTTP API
+8. `10-database-sql` — database/sql
 
 ## 初級課題
 
