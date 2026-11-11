@@ -9,6 +9,7 @@ Go の練習用リポジトリ。
 3. `03-flow-control` — for、if など
 4. `04-pointers-slices` — ポインタ、スライス
 5. `05-methods-interface` — メソッド、インターフェース
+6. `06-goroutine` — goroutine
 
 ## 初級課題
 
