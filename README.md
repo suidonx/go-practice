@@ -10,6 +10,7 @@ Go の練習用リポジトリ。
 4. `04-pointers-slices` — ポインタ、スライス
 5. `05-methods-interface` — メソッド、インターフェース
 6. `06-goroutine` — goroutine
+7. `09-http-api` — HTTP API
 
 ## 初級課題
 
