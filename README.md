@@ -8,6 +8,7 @@ Go の練習用リポジトリ。
 2. `02-variables` — 変数、型、ゼロ値、型変換
 3. `03-flow-control` — for、if など
 4. `04-pointers-slices` — ポインタ、スライス
+5. `05-methods-interface` — メソッド、インターフェース
 
 ## 初級課題
 
