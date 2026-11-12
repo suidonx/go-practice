@@ -18,6 +18,22 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, `{"message": "Hello, World!"}`)
 }
 
+// ハンドラーの構造体にDB/GORM, service, 設定、loggerなどを注入すると依存を減らす
+// なぜ？ 依存を減らすことで、ハンドラーのテストがしやすくなる。
+
+type MyHandler struct {
+	name string
+}
+
+// ServeHTTPメソッドを実装することで、http.Handlerインターフェースを満たす
+func (h *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Hello from " + h.name))
+}
+
+// リクエストハンドラー
+// リクエストを受け取り、ログを出力する
 func RequestHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Method: %s, Path: %s, Query: %v", r.Method, r.URL.Path, r.URL.Query())
 	log.Printf("User-Agent: %s", r.Header.Get("User-Agent"))
@@ -28,8 +44,8 @@ func RequestHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// ハンドラー関数を登録
-	http.HandleFunc("/", RequestHandler)
+	// ハンドラー関数ではなく、型のインスタンスを作成して登録することで、依存を減らす。
+	http.Handle("/", &MyHandler{name: "MyServer"})
 
 	// サーバーを起動
 	// nilはデフォルトのマルチプレクサーを使用
