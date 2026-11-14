@@ -26,19 +26,17 @@ func (s *ImportService) Import(path string) error {
 	}
 	defer file.Close()
 
-	// ファイルを読み込む
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		var row model.LogRow
-		if err := json.Unmarshal(scanner.Bytes(), &row); err != nil {
-			return err
+	return s.repo.Transaction(func(repo *repository.UserRepository) error {
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			var row model.LogRow
+			if err := json.Unmarshal(scanner.Bytes(), &row); err != nil {
+				return err
+			}
+			if err := repo.Create(row.User); err != nil {
+				return err
+			}
 		}
-		// ユーザーを作成する。
-		if err := s.repo.Create(row.User); err != nil {
-			return err
-		}
-	}
-	// ファイルを閉じる
-	// 正常終了ならscanner.Err()はnilを返す。読み取り失敗ならエラーを返す。
-	return scanner.Err()
+		return scanner.Err()
+	})
 }

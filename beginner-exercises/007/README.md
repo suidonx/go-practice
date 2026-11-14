@@ -129,3 +129,7 @@ docker compose down
 ```bash
 docker compose down -v
 ```
+
+## 実装メモ
+
+取り込み全体を一つのトランザクションにする話は [`transaction.md`](transaction.md)。
