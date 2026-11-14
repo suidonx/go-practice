@@ -43,5 +43,19 @@ func (r *UserRepository) Transaction(fn func(txRepo *UserRepository) error) erro
 	return r.db.Transaction(func(tx *gorm.DB) error {
 		return fn(&UserRepository{db: tx})
 
+/*
+GORM は func(tx *gorm.DB) error しか受け取らない。
+*gorm.DB は repository が持っている（レイヤードで GORM をそこに閉じている）。
+
+service が同じ型の関数を渡すと、service が tx と gorm を知る。層が崩れる。
+
+だから repository の中で:
+GORM が欲しがる func(tx *gorm.DB) error を用意する
+その中で tx を &UserRepository{db: tx} にする
+service が渡した fn(repo) を呼ぶ
+service から見える口は fn(repo *UserRepository) error。Create と同じく「repo の言葉」で呼べる。
+GORM の引数の形は、ラップの内側だけが知っている。
+*/
+
 	})
 }
