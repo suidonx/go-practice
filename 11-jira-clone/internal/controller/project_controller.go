@@ -28,6 +28,8 @@ func (c *ProjectController) Show(ctx *gin.Context) {
 	}
 	project, err := c.projectService.GetByID(uint(id))
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "project not found"})
+		return
+	}
 	ctx.JSON(http.StatusOK, project)
 }

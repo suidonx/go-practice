@@ -2,16 +2,16 @@ package controller
 
 import "11-jira-clone/internal/service"
 
-type ProjectController struct {
-	projectService *service.ProjectService
+type TaskController struct {
+	taskService *service.TaskService
 }
 
-func NewProjectController(projectService *service.ProjectController) *ProjectController {
-	return &ProjectController{projectService: projectService}
+func NewTaskController(taskService *service.TaskService) *TaskController {
+	return &TaskController{taskService: taskService}
 }
 
-func (c *ProjectController) List(ctx *gin.Context) {
-	projects, err := c.projectService.List()
+func (c *TaskController) List(ctx *gin.Context) {
+	tasks, err := c.taskService.List()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -19,17 +19,19 @@ func (c *ProjectController) List(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, projects)
 }
 
-func (c *ProjectController) Show(ctx *gin.Context) {
+func (c *TaskController) Show(ctx *gin.Context) {
 	idStr := ctx.Param("id")
+	projectIDStr := ctx.Param("project_id")
 	id, err := strconv.ParseUint(idStr, 10, 64)
+	projectID, err := strconv.ParseUint(projectIDStr, 10, 64)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid id"})
 		return
 	}
-	project, err := c.projectService.GetByID(uint(id))
+	task, err := c.taskService.GetByID(uint(id))
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "project not found"})
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "task not found"})
 		return
 	}
-	ctx.JSON(http.StatusOK, project)
+	ctx.JSON(http.StatusOK, task)
 }
