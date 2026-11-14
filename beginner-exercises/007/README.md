@@ -66,9 +66,57 @@ go run main.go sample.log
 
 ## 結果の見方
 
-TablePlus などのクライアントで、`.env` に書いたユーザ・パスワード・DB 名で接続します。
-
 `sample.log` は5行あるので、初めて実行したときは `users` に5件入ります。もう一度同じコマンドを実行すると、同じ人がまた5件追加されます（重複チェックはありません）。
+
+### コマンドで見る
+
+コンテナの中の `psql`（Postgres の対話クライアント）でつなぎます。
+
+```bash
+docker compose exec postgres psql -U user -d 007_go_practice_db
+```
+
+つながるとプロンプトが `007_go_practice_db=#` になります。テーブルと中身を見ます。
+
+```sql
+\dt
+SELECT * FROM users;
+```
+
+初回成功時は次のように5件出ます。
+
+```text
+ id | age |  name   |  role
+----+-----+---------+---------
+  1 |  22 | tarou   | student
+  2 |  23 | zirou   | student
+  3 |  24 | saburou | student
+  4 |  25 | mike    | mentor
+  5 |  26 | make    | mentor
+```
+
+抜けるときは `\q` です。1発で見るなら:
+
+```bash
+docker compose exec postgres psql -U user -d 007_go_practice_db -c 'SELECT * FROM users;'
+```
+
+`users` が無いときは、まだステップ 3 を実行していません。テーブルはプログラムの AutoMigrate で作られます。
+
+### GUI（TablePlus など）で見る
+
+コンテナの中に入るのではなく、ホストの `localhost:5432` に通常の Postgres としてつなぎます。値は `.env` と同じです。
+
+| 項目 | 値 |
+|---|---|
+| Host | `localhost` |
+| Port | `5432` |
+| User | `user` |
+| Password | `password` |
+| Database | `007_go_practice_db` |
+| SSL | オフ |
+
+左に `users` が見えたら、中身はコマンドの `SELECT` と同じ5件です。
 
 ## 止めるとき
 
